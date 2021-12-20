@@ -1,16 +1,32 @@
-import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
+import {inject, Getter} from '@loopback/core';
+import {
+  DefaultCrudRepository,
+  juggler,
+  HasManyRepositoryFactory,
+  repository,
+} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {User, UserRelations} from '../models';
+import {Post, User, UserRelations} from '../models';
+import { PostRepository } from './post.repository';
 
 export class UserRepository extends DefaultCrudRepository<
   User,
   typeof User.prototype.name,
   UserRelations
 > {
+//   public readonly post: HasManyRepositoryFactory<
+//   Post,
+//   typeof User.prototype.id
+// >;
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource,
+    @inject('datasources.db') protected db: juggler.DataSource,
+    // @repository.getter('PostRepository')
+    // postRepositoryGetter: Getter<PostRepository>,
   ) {
-    super(User, dataSource);
+    super(User, db);
+    // this.post = this.createHasManyRepositoryFactoryFor(
+    //   'post',
+    //   postRepositoryGetter,
+    // );
   }
 }

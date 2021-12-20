@@ -1,23 +1,24 @@
 import { BASE_URL_UPLOAD_FILE } from "./constants"
 import axios from 'axios';
 
-const USER_URL = `${BASE_URL_UPLOAD_FILE}/hello`
-export const getUsers = () => {
+const USER_URL = `${BASE_URL_UPLOAD_FILE}/post`
+
+export const getPost = () => {
     return axios.get(USER_URL);
 }
 
-export const getUserById = (id: any) => {
+export const getPostById = (id: any) => {
     return axios.get(`${USER_URL}/${id}`);
 }
 
-export const createUser = (body: any) => {
+export const createPost = (body: any) => {
     return axios.post(`${USER_URL}`, { ...body });
 }
 
-export const updateUser = (id:string, body: any) => {
+export const updatePost = (id:string, body: any) => {
     return axios.put(`${USER_URL}/${id}`, { ...body });
 }
 
-export const deleteUser = (id:any) => {
+export const deletePost = (id:any) => {
     return axios.delete(`${USER_URL}/${id}`);
 }

@@ -1,4 +1,5 @@
-import { Entity, model, property } from "@loopback/repository";
+import { Entity, model, property, hasMany } from "@loopback/repository";
+import { Post } from "./post.model";
 
 @model({ settings: { strict: false } })
 export class User extends Entity {
@@ -27,10 +28,9 @@ export class User extends Entity {
   })
   address: string;
 
-  // Define well-known properties here
+  // @hasMany(() => Post)
+  // post?: Post[]
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<User>) {

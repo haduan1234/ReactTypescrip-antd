@@ -1,7 +1,7 @@
 import { repository } from "@loopback/repository";
 import { get, post, requestBody, param, del, put } from "@loopback/rest";
 import { User } from "../models";
-import { UserRepository } from "../repositories";
+import { UserRepository } from "../repositories/user.repository";
 
 export class HelloController {
   constructor(
@@ -10,6 +10,10 @@ export class HelloController {
   @get("/hello")
   async hello(): Promise<User[]> {
     return this.userRepository.find();
+  }
+  @get("/hello/{id}")
+  async getById(@param.path.string("id") id: string) : Promise<User>{
+    return this.userRepository.findById(id);
   }
   @post("/hello")
   async creat(@requestBody() user: User): Promise<User> {
