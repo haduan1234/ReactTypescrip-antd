@@ -2,18 +2,21 @@ import React,{useCallback, useEffect, useMemo, useState} from "react";
 
 import { Button ,Table,  Popconfirm } from "antd";
 
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
 import { AiFillDelete } from "react-icons/ai";
+import { FaRegEdit } from "react-icons/fa";
 
-import { getUsers, deleteUser } from "../../services/userService";
+import { getUsers, deleteUser } from "../../../services/userService";
 
 import { useSelector } from "react-redux";
 
 const User = () =>{
 
     const [user, setUser] = useState([])
+    
     const store= useSelector(state => state)
+    const navigate = useNavigate()
 
     const columns = (handleDelete: any) => [
         {
@@ -36,14 +39,26 @@ const User = () =>{
            dataIndex: 'remove',
            key: 'remove',
            className: 'column-money',
-        //    align: 'center',
            render: (_:any , record: any, index: number ) =>
             user.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record,)}>
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
               < AiFillDelete />
             </Popconfirm>
             ) : null,
         },
+        {
+            title: 'Edit',
+            dataIndex:'edit',
+            key : 'edit',
+            render: (_: any, record: any, index: number)=>
+            user.length>=1 ? (
+            <Button onClick={() => {
+                navigate(`createUser/${record.id}`)
+            }}>
+                <FaRegEdit />
+            </Button>
+            ):null
+        }
       ];
 
 const findUser = useCallback(async() =>{

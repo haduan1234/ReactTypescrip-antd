@@ -1,28 +1,29 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property, belongsTo } from "@loopback/repository";
+import { UserRelations, UserWithRelations } from ".";
+import { User } from ".";
 
-@model({settings: {strict: false}})
+@model({ settings: { strict: false } })
 export class Post extends Entity {
   @property({
-    type: 'string',
+    type: "string",
     id: true,
-    generated: true,
+    generated: true
   })
   id?: string;
 
   @property({
-    type: 'string',
+    type: "string"
   })
   namePost?: string;
 
   @property({
-    type: 'string',
+    type: "string"
   })
   content?: string;
 
-  // Define well-known properties here
+  @belongsTo(() => User)
+  userId: string;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Post>) {
@@ -32,6 +33,7 @@ export class Post extends Entity {
 
 export interface PostRelations {
   // describe navigational properties here
+  user?: UserWithRelations
 }
 
 export type PostWithRelations = Post & PostRelations;
